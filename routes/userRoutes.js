@@ -23,21 +23,26 @@ router.get('/', async (req, res) => {
   }
 });
 
-// READ a specific User by email
-router.get('/api/users/:email', async (req, res) => {
-  console.log('Received request for:', req.params.email);
+
+// Route to get a user by email
+router.get('/:id', async (req, res) => {
+  // const email = req.params.id;
+  console.log('Received request for email:', req.params.id);
+
   try {
-    const users = await User.findOne({ email: req.params.email });
-    console.log (users);
-    if (users) {
-      res.json(users);
+    // Query the database for a user with the given email
+    const user = await User.findOne({ id:_id });
+    if (user) {
+      res.json(user); // Return user data as JSON if found
     } else {
-      res.status(404).json({ message: 'User not found' });
+      res.status(404).json({ message: 'User not found' }); // Return 404 if no user is found
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Error fetching user:', error);
+    res.status(500).json({ message: error.message }); // Return 500 for server errors
   }
 });
+
 
 
 

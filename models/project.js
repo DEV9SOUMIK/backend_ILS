@@ -10,6 +10,7 @@ const projectsSchema = new mongoose.Schema({
   fundBy: { type: String, required: true },
   startDt: {type: String, required: true},
   endDt: {type:String}
+  
 });
 
 // Create a model from the schema and export it

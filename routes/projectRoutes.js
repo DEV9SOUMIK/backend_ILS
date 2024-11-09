@@ -22,6 +22,23 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+router.get('/:id', async (req, res) => {
+  try {
+    console.log( 'id', req.params.id);
+    // Query the database for a user with the given email
+    const project = await Project.findOne({ _id:req.params.id });
+    console.log(project, 'project');
+    if (project) {
+      res.json(project); // Return user data as JSON if found
+    } else {
+      res.status(404).json({ message: 'project not found' }); // Return 404 if no user is found
+    }
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).json({ message: error.message }); // Return 500 for server errors
+  }
+});
 // UPDATE an item by ID
 router.put('/:id', async (req, res) => {
     try {
